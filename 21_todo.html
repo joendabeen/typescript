@@ -6,28 +6,40 @@
     <title>Document</title>
   </head>
   <body>
-    <input type="text" placeholder="할 일 입력" />
+    <input type="text" name="할일" placeholder="할일 입력" />
     <button id="add">추가</button>
     <div id="todoList"></div>
 
     <script>
       const todoListDiv = document.querySelector("#todoList");
-      const input = document.getElementsByTagName("input");
+      const input = document.querySelector("input");
       const addBtn = document.querySelector("#add");
 
       let id = 1;
       // todo 추가
       addBtn.addEventListener("click", () => {
-        const text = input.textContent;
-        const span = document.createElement("span");
-        span.id = id++;
-        span.textContent(
-          `${span.classList.contains("complicated") ? "[✓]" : "[ ]"} ${text}`,
-        );
+        const text = input.value;
+        const todo = document.createElement("div");
+        todo.id = id++;
+
+        const checkbox = document.createElement("input");
+        checkbox.setAttribute("class", "toggle");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("name", todo.id);
+        todo.appendChild(checkbox);
+
+        const label = document.createElement("label");
+        label.setAttribute("for", todo.id);
+        label.textContent = text;
+        todo.appendChild(label);
+
         const rmBtn = document.createElement("button");
-        span.appendChild(rmBtn);
-        todoListDiv.appendChild(span);
-        input.textContent = "";
+        rmBtn.setAttribute("class", "remove");
+        rmBtn.textContent = "❌";
+        todo.appendChild(rmBtn);
+
+        todoListDiv.appendChild(todo);
+        input.value = "";
       });
 
       // todo 조회
