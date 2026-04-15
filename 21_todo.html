@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" placeholder="할 일 입력" />
+    <button id="add">추가</button>
+    <div id="todoList"></div>
+
+    <script>
+      const todoListDiv = document.querySelector("#todoList");
+      const input = document.getElementsByTagName("input");
+      const addBtn = document.querySelector("#add");
+
+      let id = 1;
+      // todo 추가
+      addBtn.addEventListener("click", () => {
+        const text = input.textContent;
+        const span = document.createElement("span");
+        span.id = id++;
+        span.textContent(
+          `${span.classList.contains("complicated") ? "[✓]" : "[ ]"} ${text}`,
+        );
+        const rmBtn = document.createElement("button");
+        span.appendChild(rmBtn);
+        todoListDiv.appendChild(span);
+        input.textContent = "";
+      });
+
+      // todo 조회
+      //   function getTodoList() {
+      //       this.todoList.forEach((todo) =>
+      //       console.log(`${todo.complited ? "[✓]" : "[ ]"} ${todo.text}`),
+      //       );
+      //       // console.log("📌Todo List");
+      //       // for (const todo of this.todoList) {
+      //       //   if (todo.complited) {
+      //       //     console.log(`[✓] ${todo.text}`);
+      //       //   } else {
+      //       //     console.log(`[ ] ${todo.text}`);
+      //       //   }
+      //       // }
+      //       console.log("\n");
+      //   }
+
+      // todo 토글
+      function toggleTodo(id) {
+        const todo = this.todoList.find((todo) => todo.id === id);
+        if (!todo) {
+          throw new Error("존재하지 않는 Todo");
+        }
+        todo.complited = !todo.complited;
+      }
+      // todo 삭제
+      function deleteTodo(id) {
+        // this.todoList = this.todoList.filter((todo) => todo.id !== id);
+        const targetIndex = this.todoList.findIndex((todo) => todo.id === id);
+        this.todoList.splice(targetIndex, 1);
+      }
+    </script>
+  </body>
+</html>
